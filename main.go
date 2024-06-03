@@ -6,6 +6,16 @@ import (
 	"os/exec"
 )
 
+type Barang struct {
+	nama     string
+	harga    float64
+	kategori string
+}
+
+type TabBarang []Barang
+
+var listBarang TabBarang
+
 func inputMenu(maks int) int {
 	var pilihan int
 
@@ -56,30 +66,75 @@ func listMenuUtama() {
 	fmt.Println("--------------------------")
 }
 
+func tambahBarang() {
+	clearScreen()
+	var barang Barang
+	var benar string
+
+	for {
+		fmt.Print("🔠 Masukkan Nama Barang: ")
+		fmt.Scan(&barang.nama)
+
+		fmt.Print("💰 Masukkan Harga Barang: ")
+		fmt.Scan(&barang.harga)
+
+		fmt.Print("🏷️  Masukkan Kategori Barang: ")
+		fmt.Scan(&barang.kategori)
+
+		fmt.Println("Konfirmasi Barang:")
+		fmt.Printf("%s seharga %.f dengan kategori %s\n", barang.nama, barang.harga, barang.kategori)
+		fmt.Print("Apa sudah benar? (y/n): ")
+
+		fmt.Scan(&benar)
+		if benar == "y" || benar == "Y" {
+			listBarang = append(listBarang, barang)
+			return
+		}
+	}
+}
+
+func lihatBarang() {
+	clearScreen()
+
+	if len(listBarang) == 0 {
+		fmt.Println("Belum ada barang yang tersimpan")
+	}
+	for index, barang := range listBarang {
+		nomor := index + 1
+		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", nomor, barang.nama, barang.harga, barang.kategori)
+	}
+
+	fmt.Println("Klik Enter untuk kembali")
+	fmt.Scanln()
+}
+
 func menuBarang() {
+	clearScreen()
+
 	for {
 		listMenuBarang()
 		pilihan := inputMenu(6)
 
 		switch pilihan {
 		case 1:
-
+			tambahBarang()
 		case 2:
 
 		case 3:
 
 		case 4:
-
+			lihatBarang()
 		case 5:
 
 		case 6:
-			clearScreen()
 			return
 		}
 	}
 }
 
 func menuTransaksi() {
+	clearScreen()
+
 	for {
 		listMenuTransaksi()
 		pilihan := inputMenu(6)
@@ -94,23 +149,22 @@ func menuTransaksi() {
 		case 4:
 
 		case 5:
-			clearScreen()
 			return
 		}
 	}
 }
 
 func menuUtama() {
+	clearScreen()
+
 	for {
 		listMenuUtama()
 		pilihan := inputMenu(3)
 
 		switch pilihan {
 		case 1:
-			clearScreen()
 			menuBarang()
 		case 2:
-			clearScreen()
 			menuTransaksi()
 		case 3:
 			end()
