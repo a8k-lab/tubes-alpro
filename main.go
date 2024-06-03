@@ -31,6 +31,25 @@ func inputMenu(maks int) int {
 	}
 }
 
+func cekAdaBarang() bool {
+	return len(listBarang) > 0
+}
+
+func tampilkanListBarang() {
+	for index, barang := range listBarang {
+		nomor := index + 1
+		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", nomor, barang.nama, barang.harga, barang.kategori)
+	}
+	fmt.Println("Klik Enter untuk kembali")
+	fmt.Scanln()
+}
+
+func tampilkanBarangKosong() {
+	fmt.Println("Belum ada barang yang tersimpan")
+	fmt.Println("Klik Enter untuk kembali")
+	fmt.Scanln()
+}
+
 func listMenuBarang() {
 	fmt.Println("#------------------------#")
 	fmt.Println("#     Menu Barang 📦     #")
@@ -72,13 +91,13 @@ func tambahBarang() {
 	var benar string
 
 	for {
-		fmt.Print("🔠 Masukkan Nama Barang: ")
+		fmt.Print("🔠 Masukkan nama Barang: ")
 		fmt.Scan(&barang.nama)
 
-		fmt.Print("💰 Masukkan Harga Barang: ")
+		fmt.Print("💰 Masukkan harga Barang: ")
 		fmt.Scan(&barang.harga)
 
-		fmt.Print("🏷️  Masukkan Kategori Barang: ")
+		fmt.Print("🏷️  Masukkan kategori Barang: ")
 		fmt.Scan(&barang.kategori)
 
 		fmt.Println("Konfirmasi Barang:")
@@ -93,19 +112,52 @@ func tambahBarang() {
 	}
 }
 
+func editBarang() {
+	clearScreen()
+	var barangBaru, barangLama Barang
+	var pilihan int
+	var benar string
+
+	if cekAdaBarang() {
+		tampilkanListBarang()
+		fmt.Print("Pilih Barang yang ingin diedit berdasarkan nomornya: ")
+		fmt.Scan(&pilihan)
+
+		barangBaru = listBarang[pilihan-1]
+		barangLama = listBarang[pilihan-1]
+		fmt.Print("🔠 Masukkan nama baru Barang: ")
+		fmt.Scan(&barangBaru.nama)
+
+		fmt.Print("💰 Masukkan harga baru Barang: ")
+		fmt.Scan(&barangBaru.harga)
+
+		fmt.Print("🏷️  Masukkan kategori baru Barang: ")
+		fmt.Scan(&barangBaru.kategori)
+
+		fmt.Println("Konfirmasi perubahan:")
+		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", barangLama.nama, barangBaru.nama)
+		fmt.Printf("%.f diubah menjadi %.f\n", barangLama.harga, barangBaru.harga)
+		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", barangLama.kategori, barangBaru.kategori)
+		fmt.Print("Apa sudah benar? (y/n): ")
+
+		fmt.Scan(&benar)
+		if benar == "y" || benar == "Y" {
+			listBarang[pilihan-1] = barangBaru
+			return
+		}
+	} else {
+		tampilkanBarangKosong()
+	}
+}
+
 func lihatBarang() {
 	clearScreen()
 
-	if len(listBarang) == 0 {
-		fmt.Println("Belum ada barang yang tersimpan")
+	if cekAdaBarang() {
+		tampilkanListBarang()
+	} else {
+		tampilkanBarangKosong()
 	}
-	for index, barang := range listBarang {
-		nomor := index + 1
-		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", nomor, barang.nama, barang.harga, barang.kategori)
-	}
-
-	fmt.Println("Klik Enter untuk kembali")
-	fmt.Scanln()
 }
 
 func menuBarang() {
@@ -119,7 +171,7 @@ func menuBarang() {
 		case 1:
 			tambahBarang()
 		case 2:
-
+			editBarang()
 		case 3:
 
 		case 4:
