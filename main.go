@@ -213,9 +213,8 @@ func lihatBarang() {
 }
 
 func menuBarang() {
-	clearScreen()
-
 	for {
+		clearScreen()
 		listMenuBarang()
 		pilihan := inputMenu(6)
 
@@ -237,9 +236,8 @@ func menuBarang() {
 }
 
 func menuTransaksi() {
-	clearScreen()
-
 	for {
+		clearScreen()
 		listMenuTransaksi()
 		pilihan := inputMenu(6)
 
@@ -259,9 +257,8 @@ func menuTransaksi() {
 }
 
 func menuUtama() {
-	clearScreen()
-
 	for {
+		clearScreen()
 		listMenuUtama()
 		pilihan := inputMenu(3)
 
