@@ -102,10 +102,11 @@ func listMenuUtama() {
 
 func tambahBarang() {
 	clearScreen()
-	var barang Barang
-	var benar string
 
 	for {
+		var barang Barang
+		var benar string
+
 		fmt.Println("🔠 Masukkan nama Barang:")
 		fmt.Print("> ")
 		fmt.Scan(&barang.nama)
@@ -133,11 +134,12 @@ func tambahBarang() {
 
 func editBarang() {
 	clearScreen()
-	var barangBaru, barangLama Barang
-	var pilihan int
-	var benar string
 
 	if cekAdaBarang() {
+		var barangBaru, barangLama Barang
+		var pilihan int
+		var benar string
+
 		tampilkanListBarang()
 		fmt.Println("Pilih nomor Barang yang ingin diedit:")
 		fmt.Print("> ")
@@ -176,11 +178,12 @@ func editBarang() {
 
 func hapusBarang() {
 	clearScreen()
-	var barang Barang
-	var pilihan int
-	var benar string
 
 	if cekAdaBarang() {
+		var barang Barang
+		var pilihan int
+		var benar string
+
 		tampilkanListBarang()
 		fmt.Println("Pilih nomor Barang yang ingin dihapus:")
 		fmt.Print("> ")
@@ -273,7 +276,7 @@ func menuTransaksi() {
 	for {
 		clearScreen()
 		listMenuTransaksi()
-		pilihan := inputMenu(6)
+		pilihan := inputMenu(5)
 
 		switch pilihan {
 		case 1:
