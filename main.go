@@ -212,6 +212,40 @@ func lihatBarang() {
 	}
 }
 
+func cariBarang() {
+	clearScreen()
+
+	if cekAdaBarang() {
+		var namaCari string
+		var ketemu bool
+
+		fmt.Println("Masukkan nama barang (case sensitive):")
+		fmt.Print("> ")
+		fmt.Scan(&namaCari)
+
+		clearScreen()
+		for index, barang := range listBarang {
+			if namaCari == barang.nama {
+				ketemu = true
+				fmt.Println("Hasil pencarian barang:")
+				fmt.Printf("Nomor: %d\n", index+1)
+				fmt.Printf("Nama: %s\n", barang.nama)
+				fmt.Printf("Harga: %.f\n", barang.harga)
+				fmt.Printf("Kategori: %s\n", barang.kategori)
+				fmt.Println("--------------------------")
+			}
+		}
+
+		if !ketemu {
+			fmt.Println("Tidak ada barang yang ditemukan")
+		}
+		fmt.Println("Klik Enter untuk kembali")
+		fmt.Scanln()
+	} else {
+		tampilkanBarangKosong()
+	}
+}
+
 func menuBarang() {
 	for {
 		clearScreen()
@@ -228,7 +262,7 @@ func menuBarang() {
 		case 4:
 			lihatBarang()
 		case 5:
-
+			cariBarang()
 		case 6:
 			return
 		}
