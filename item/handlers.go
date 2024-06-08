@@ -75,14 +75,13 @@ func EditItemMenu() {
 	utils.ClearScreen()
 
 	if IsItemExist() {
-		var newItem, selectedItem Item
 		var isConfirm string
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin diedit")
 		selectedNumber := utils.InputMenu(len(ItemList))
-		newItem = ItemList[selectedNumber-1]
-		selectedItem = ItemList[selectedNumber-1]
+		newItem := ItemList[selectedNumber-1]
+		selectedItem := ItemList[selectedNumber-1]
 
 		fmt.Println("🔠 Masukkan nama baru barang:")
 		fmt.Print("> ")
@@ -117,13 +116,12 @@ func DeleteItemMenu() {
 	utils.ClearScreen()
 
 	if IsItemExist() {
-		var selectedItem Item
 		var isConfirm string
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin dihapus")
 		selectedNumber := utils.InputMenu(len(ItemList))
-		selectedItem = ItemList[selectedNumber-1]
+		selectedItem := ItemList[selectedNumber-1]
 
 		fmt.Printf("Yakin ingin menghapus \"%s\"? (y/n):\n", selectedItem.Name)
 		fmt.Print("> ")

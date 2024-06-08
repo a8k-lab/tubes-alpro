@@ -80,13 +80,13 @@ func EditTransactionMenu() {
 	utils.ClearScreen()
 
 	if IsTransactionExist() {
-		var newTransaction, selectedTransaction Transaction
+		var newTransaction Transaction
 		var isConfirm string
 
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin diedit")
 		selectedNumber := utils.InputMenu(len(TransactionList))
-		selectedTransaction = TransactionList[selectedNumber-1]
+		selectedTransaction := TransactionList[selectedNumber-1]
 
 		fmt.Println("🔢 Masukkan jumlah baru barang:")
 		fmt.Print("> ")
@@ -116,13 +116,12 @@ func DeleteTransactionMenu() {
 	utils.ClearScreen()
 
 	if IsTransactionExist() {
-		var selectedTransaction Transaction
 		var isConfirm string
 
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin dihapus")
 		selectedNumber := utils.InputMenu(len(TransactionList))
-		selectedTransaction = TransactionList[selectedNumber-1]
+		selectedTransaction := TransactionList[selectedNumber-1]
 
 		fmt.Printf("Transaksi nomor %d\n", selectedNumber)
 		fmt.Printf("Nama: %s\n", selectedTransaction.Item.Name)
