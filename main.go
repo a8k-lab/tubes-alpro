@@ -6,66 +6,66 @@ import (
 	"os/exec"
 )
 
-type Barang struct {
-	nama     string
-	harga    float64
-	kategori string
+type Item struct {
+	name     string
+	price    float64
+	category string
 }
 
-type TabBarang []Barang
+type TabItem []Item
 
-var listBarang TabBarang
+var itemList TabItem
 
-func inputMenu(maks int) int {
-	var pilihan int
+func inputMenu(max int) int {
+	var selectedNumber int
 
 	for {
 		fmt.Print("Pilih (1")
-		for i := 2; i <= maks; i++ {
+		for i := 2; i <= max; i++ {
 			fmt.Printf("/%d", i)
 		}
 		fmt.Println(")")
 		fmt.Print("> ")
-		fmt.Scanln(&pilihan)
+		fmt.Scanln(&selectedNumber)
 
-		if pilihan > maks || pilihan < 1 {
+		if selectedNumber > max || selectedNumber < 1 {
 			fmt.Println("❌ Pilihan tidak valid")
 		} else {
-			return pilihan
+			return selectedNumber
 		}
 	}
 }
 
-func hapusBarangDenganIndex(index int) {
-	var listBarangBaru TabBarang
+func deleteItemByIndex(index int) {
+	var newItemList TabItem
 
-	for i := 0; i < len(listBarang); i++ {
+	for i := 0; i < len(itemList); i++ {
 		if i != index {
-			listBarangBaru = append(listBarangBaru, listBarang[i])
+			newItemList = append(newItemList, itemList[i])
 		}
 	}
 
-	listBarang = listBarangBaru
+	itemList = newItemList
 }
 
-func cekAdaBarang() bool {
-	return len(listBarang) > 0
+func isItemExist() bool {
+	return len(itemList) > 0
 }
 
-func tampilkanListBarang() {
-	for index, barang := range listBarang {
-		nomor := index + 1
-		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", nomor, barang.nama, barang.harga, barang.kategori)
+func showItemList() {
+	for index, item := range itemList {
+		number := index + 1
+		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", number, item.name, item.price, item.category)
 	}
 }
 
-func tampilkanBarangKosong() {
+func showEmptyItemList() {
 	fmt.Println("Belum ada barang yang tersimpan")
 	fmt.Println("Klik Enter untuk kembali")
 	fmt.Scanln()
 }
 
-func listMenuBarang() {
+func printItemMenu() {
 	fmt.Println("#------------------------#")
 	fmt.Println("#     Menu Barang 📦     #")
 	fmt.Println("#------------------------#")
@@ -78,7 +78,7 @@ func listMenuBarang() {
 	fmt.Println("--------------------------")
 }
 
-func listMenuTransaksi() {
+func printTransactionMenu() {
 	fmt.Println("#------------------------#")
 	fmt.Println("#    Menu Transaksi 💵   #")
 	fmt.Println("#------------------------#")
@@ -90,7 +90,7 @@ func listMenuTransaksi() {
 	fmt.Println("--------------------------")
 }
 
-func listMenuUtama() {
+func printMainMenu() {
 	fmt.Println("#------------------------#")
 	fmt.Println("#         M E N U        #")
 	fmt.Println("#------------------------#")
@@ -100,185 +100,185 @@ func listMenuUtama() {
 	fmt.Println("--------------------------")
 }
 
-func tambahBarang() {
+func addItem() {
 	clearScreen()
 
 	for {
-		var barang Barang
-		var benar string
+		var newItem Item
+		var isConfirm string
 
 		fmt.Println("🔠 Masukkan nama Barang:")
 		fmt.Print("> ")
-		fmt.Scan(&barang.nama)
+		fmt.Scan(&newItem.name)
 
 		fmt.Println("💰 Masukkan harga Barang:")
 		fmt.Print("> ")
-		fmt.Scan(&barang.harga)
+		fmt.Scan(&newItem.price)
 
 		fmt.Println("🏷️  Masukkan kategori Barang:")
 		fmt.Print("> ")
-		fmt.Scan(&barang.kategori)
+		fmt.Scan(&newItem.category)
 
 		fmt.Println("Konfirmasi Barang:")
-		fmt.Printf("%s seharga %.f dengan kategori %s\n", barang.nama, barang.harga, barang.kategori)
+		fmt.Printf("%s seharga %.f dengan kategori %s\n", newItem.name, newItem.price, newItem.category)
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
-		fmt.Scan(&benar)
+		fmt.Scan(&isConfirm)
 
-		if benar == "y" || benar == "Y" {
-			listBarang = append(listBarang, barang)
+		if isConfirm == "y" || isConfirm == "Y" {
+			itemList = append(itemList, newItem)
 			return
 		}
 	}
 }
 
-func editBarang() {
+func editItem() {
 	clearScreen()
 
-	if cekAdaBarang() {
-		var barangBaru, barangLama Barang
-		var pilihan int
-		var benar string
+	if isItemExist() {
+		var newItem, selectedItem Item
+		var selectedNumber int
+		var isConfirm string
 
-		tampilkanListBarang()
+		showItemList()
 		fmt.Println("Pilih nomor Barang yang ingin diedit:")
 		fmt.Print("> ")
-		fmt.Scan(&pilihan)
+		fmt.Scan(&selectedNumber)
 
-		barangBaru = listBarang[pilihan-1]
-		barangLama = listBarang[pilihan-1]
+		newItem = itemList[selectedNumber-1]
+		selectedItem = itemList[selectedNumber-1]
 		fmt.Println("🔠 Masukkan nama baru Barang:")
 		fmt.Print("> ")
-		fmt.Scan(&barangBaru.nama)
+		fmt.Scan(&newItem.name)
 
 		fmt.Println("💰 Masukkan harga baru Barang:")
 		fmt.Print("> ")
-		fmt.Scan(&barangBaru.harga)
+		fmt.Scan(&newItem.price)
 
 		fmt.Println("🏷️  Masukkan kategori baru Barang:")
 		fmt.Print("> ")
-		fmt.Scan(&barangBaru.kategori)
+		fmt.Scan(&newItem.category)
 
 		fmt.Println("Konfirmasi perubahan:")
-		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", barangLama.nama, barangBaru.nama)
-		fmt.Printf("%.f diubah menjadi %.f\n", barangLama.harga, barangBaru.harga)
-		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", barangLama.kategori, barangBaru.kategori)
+		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", selectedItem.name, newItem.name)
+		fmt.Printf("%.f diubah menjadi %.f\n", selectedItem.price, newItem.price)
+		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", selectedItem.category, newItem.category)
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
-		fmt.Scan(&benar)
+		fmt.Scan(&isConfirm)
 
-		if benar == "y" || benar == "Y" {
-			listBarang[pilihan-1] = barangBaru
+		if isConfirm == "y" || isConfirm == "Y" {
+			itemList[selectedNumber-1] = newItem
 			return
 		}
 	} else {
-		tampilkanBarangKosong()
+		showEmptyItemList()
 	}
 }
 
-func hapusBarang() {
+func deleteItem() {
 	clearScreen()
 
-	if cekAdaBarang() {
-		var barang Barang
-		var pilihan int
-		var benar string
+	if isItemExist() {
+		var selectedItem Item
+		var selectedNumber int
+		var isConfirm string
 
-		tampilkanListBarang()
+		showItemList()
 		fmt.Println("Pilih nomor Barang yang ingin dihapus:")
 		fmt.Print("> ")
-		fmt.Scan(&pilihan)
-		barang = listBarang[pilihan-1]
+		fmt.Scan(&selectedNumber)
+		selectedItem = itemList[selectedNumber-1]
 
-		fmt.Printf("Yakin ingin menghapus \"%s\"? (y/n):\n", barang.nama)
+		fmt.Printf("Yakin ingin menghapus \"%s\"? (y/n):\n", selectedItem.name)
 		fmt.Print("> ")
-		fmt.Scan(&benar)
+		fmt.Scan(&isConfirm)
 
-		if benar == "y" || benar == "Y" {
-			hapusBarangDenganIndex(pilihan - 1)
+		if isConfirm == "y" || isConfirm == "Y" {
+			deleteItemByIndex(selectedNumber - 1)
 			return
 		}
 	} else {
-		tampilkanBarangKosong()
+		showEmptyItemList()
 	}
 }
 
-func lihatBarang() {
+func showItem() {
 	clearScreen()
 
-	if cekAdaBarang() {
-		tampilkanListBarang()
+	if isItemExist() {
+		showItemList()
 		fmt.Println("Klik Enter untuk kembali")
 		fmt.Scanln()
 	} else {
-		tampilkanBarangKosong()
+		showEmptyItemList()
 	}
 }
 
-func cariBarang() {
+func searchItem() {
 	clearScreen()
 
-	if cekAdaBarang() {
-		var namaCari string
-		var ketemu bool
+	if isItemExist() {
+		var keyword string
+		var isFound bool
 
 		fmt.Println("Masukkan nama barang (case sensitive):")
 		fmt.Print("> ")
-		fmt.Scan(&namaCari)
+		fmt.Scan(&keyword)
 
 		clearScreen()
-		for index, barang := range listBarang {
-			if namaCari == barang.nama {
-				ketemu = true
+		for index, item := range itemList {
+			if keyword == item.name {
+				isFound = true
 				fmt.Println("Hasil pencarian barang:")
 				fmt.Printf("Nomor: %d\n", index+1)
-				fmt.Printf("Nama: %s\n", barang.nama)
-				fmt.Printf("Harga: %.f\n", barang.harga)
-				fmt.Printf("Kategori: %s\n", barang.kategori)
+				fmt.Printf("Nama: %s\n", item.name)
+				fmt.Printf("Harga: %.f\n", item.price)
+				fmt.Printf("Kategori: %s\n", item.category)
 				fmt.Println("--------------------------")
 			}
 		}
 
-		if !ketemu {
+		if !isFound {
 			fmt.Println("Tidak ada barang yang ditemukan")
 		}
 		fmt.Println("Klik Enter untuk kembali")
 		fmt.Scanln()
 	} else {
-		tampilkanBarangKosong()
+		showEmptyItemList()
 	}
 }
 
-func menuBarang() {
+func itemMenu() {
 	for {
 		clearScreen()
-		listMenuBarang()
-		pilihan := inputMenu(6)
+		printItemMenu()
+		selectMenu := inputMenu(6)
 
-		switch pilihan {
+		switch selectMenu {
 		case 1:
-			tambahBarang()
+			addItem()
 		case 2:
-			editBarang()
+			editItem()
 		case 3:
-			hapusBarang()
+			deleteItem()
 		case 4:
-			lihatBarang()
+			showItem()
 		case 5:
-			cariBarang()
+			searchItem()
 		case 6:
 			return
 		}
 	}
 }
 
-func menuTransaksi() {
+func transactionMenu() {
 	for {
 		clearScreen()
-		listMenuTransaksi()
-		pilihan := inputMenu(5)
+		printTransactionMenu()
+		selectMenu := inputMenu(5)
 
-		switch pilihan {
+		switch selectMenu {
 		case 1:
 
 		case 2:
@@ -293,17 +293,17 @@ func menuTransaksi() {
 	}
 }
 
-func menuUtama() {
+func mainMenu() {
 	for {
 		clearScreen()
-		listMenuUtama()
-		pilihan := inputMenu(3)
+		printMainMenu()
+		selectMenu := inputMenu(3)
 
-		switch pilihan {
+		switch selectMenu {
 		case 1:
-			menuBarang()
+			itemMenu()
 		case 2:
-			menuTransaksi()
+			transactionMenu()
 		case 3:
 			end()
 		}
@@ -312,7 +312,7 @@ func menuUtama() {
 
 func main() {
 	clearScreen()
-	menuUtama()
+	mainMenu()
 }
 
 func clearScreen() {
