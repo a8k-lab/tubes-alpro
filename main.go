@@ -16,19 +16,19 @@ type TabItem []Item
 
 var itemList TabItem
 
-func inputMenu(maks int) int {
+func inputMenu(max int) int {
 	var selectedNumber int
 
 	for {
 		fmt.Print("Pilih (1")
-		for i := 2; i <= maks; i++ {
+		for i := 2; i <= max; i++ {
 			fmt.Printf("/%d", i)
 		}
 		fmt.Println(")")
 		fmt.Print("> ")
 		fmt.Scanln(&selectedNumber)
 
-		if selectedNumber > maks || selectedNumber < 1 {
+		if selectedNumber > max || selectedNumber < 1 {
 			fmt.Println("❌ Pilihan tidak valid")
 		} else {
 			return selectedNumber
