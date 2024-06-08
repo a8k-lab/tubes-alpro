@@ -12,15 +12,15 @@ func ItemMenu() {
 
 		switch selectMenu {
 		case 1:
-			AddItem()
+			AddItemMenu()
 		case 2:
-			EditItem()
+			EditItemMenu()
 		case 3:
-			DeleteItem()
+			DeleteItemMenu()
 		case 4:
-			ShowItem()
+			ShowItemMenu()
 		case 5:
-			SearchItem()
+			SearchItemMenu()
 		case 6:
 			return
 		}

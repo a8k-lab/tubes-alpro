@@ -12,13 +12,13 @@ func TransactionMenu() {
 
 		switch selectMenu {
 		case 1:
-			// AddTransaction()
+			AddTransactionMenu()
 		case 2:
-			// EditTransaction()
+			EditTransactionMenu()
 		case 3:
-			// DeleteTransaction()
+			DeleteTransactionMenu()
 		case 4:
-			// ShowTransactions()
+			ShowTransactionMenu()
 		case 5:
 			return
 		}

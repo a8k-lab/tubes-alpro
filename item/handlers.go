@@ -13,93 +13,99 @@ type Item struct {
 
 type TabItem []Item
 
-var itemList TabItem
+var ItemList TabItem
 
 func IsItemExist() bool {
-	return len(itemList) > 0
+	return len(ItemList) > 0
 }
 
 func DeleteItemByIndex(index int) {
 	var newItemList TabItem
 
-	for i := 0; i < len(itemList); i++ {
+	for i := 0; i < len(ItemList); i++ {
 		if i != index {
-			newItemList = append(newItemList, itemList[i])
+			newItemList = append(newItemList, ItemList[i])
 		}
 	}
 
-	itemList = newItemList
+	ItemList = newItemList
 }
 
-func AddItem() {
+func ShowItemList() {
+	for index, item := range ItemList {
+		number := index + 1
+		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", number, item.Name, item.Price, item.Category)
+	}
+	fmt.Println("--------------------------")
+}
+
+func AddItemMenu() {
 	utils.ClearScreen()
 
 	for {
 		var newItem Item
 		var isConfirm string
 
-		fmt.Println("🔠 Masukkan nama Barang:")
+		fmt.Println("🔠 Masukkan nama barang:")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Name)
 
-		fmt.Println("💰 Masukkan harga Barang:")
+		fmt.Println("💰 Masukkan harga barang:")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Price)
 
-		fmt.Println("🏷️  Masukkan kategori Barang:")
+		fmt.Println("🏷️  Masukkan kategori barang:")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Category)
 
-		fmt.Println("Konfirmasi Barang:")
+		fmt.Println("Konfirmasi barang:")
 		fmt.Printf("%s seharga %.f dengan kategori %s\n", newItem.Name, newItem.Price, newItem.Category)
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
 
 		if isConfirm == "y" || isConfirm == "Y" {
-			itemList = append(itemList, newItem)
+			ItemList = append(ItemList, newItem)
 			return
 		}
 	}
 }
 
-func EditItem() {
+func EditItemMenu() {
 	utils.ClearScreen()
 
 	if IsItemExist() {
 		var newItem, selectedItem Item
-		var selectedNumber int
 		var isConfirm string
 
 		ShowItemList()
-		fmt.Println("Pilih nomor Barang yang ingin diedit:")
-		fmt.Print("> ")
-		fmt.Scan(&selectedNumber)
+		fmt.Println("Masukkan nomor barang yang ingin diedit")
+		selectedNumber := utils.InputMenu(len(ItemList))
+		newItem = ItemList[selectedNumber-1]
+		selectedItem = ItemList[selectedNumber-1]
 
-		newItem = itemList[selectedNumber-1]
-		selectedItem = itemList[selectedNumber-1]
-		fmt.Println("🔠 Masukkan nama baru Barang:")
+		fmt.Println("🔠 Masukkan nama baru barang:")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Name)
 
-		fmt.Println("💰 Masukkan harga baru Barang:")
+		fmt.Println("💰 Masukkan harga baru barang:")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Price)
 
-		fmt.Println("🏷️  Masukkan kategori baru Barang:")
+		fmt.Println("🏷️  Masukkan kategori baru barang:")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Category)
 
 		fmt.Println("Konfirmasi perubahan:")
-		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
-		fmt.Printf("%.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
-		fmt.Printf("\"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
+		fmt.Printf("- \"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
+		fmt.Printf("- %.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
+		fmt.Printf("- \"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
 
 		if isConfirm == "y" || isConfirm == "Y" {
-			itemList[selectedNumber-1] = newItem
+			ItemList[selectedNumber-1] = newItem
 			return
 		}
 	} else {
@@ -107,19 +113,17 @@ func EditItem() {
 	}
 }
 
-func DeleteItem() {
+func DeleteItemMenu() {
 	utils.ClearScreen()
 
 	if IsItemExist() {
 		var selectedItem Item
-		var selectedNumber int
 		var isConfirm string
 
 		ShowItemList()
-		fmt.Println("Pilih nomor Barang yang ingin dihapus:")
-		fmt.Print("> ")
-		fmt.Scan(&selectedNumber)
-		selectedItem = itemList[selectedNumber-1]
+		fmt.Println("Masukkan nomor barang yang ingin dihapus")
+		selectedNumber := utils.InputMenu(len(ItemList))
+		selectedItem = ItemList[selectedNumber-1]
 
 		fmt.Printf("Yakin ingin menghapus \"%s\"? (y/n):\n", selectedItem.Name)
 		fmt.Print("> ")
@@ -134,14 +138,7 @@ func DeleteItem() {
 	}
 }
 
-func ShowItemList() {
-	for index, item := range itemList {
-		number := index + 1
-		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", number, item.Name, item.Price, item.Category)
-	}
-}
-
-func ShowItem() {
+func ShowItemMenu() {
 	utils.ClearScreen()
 
 	if IsItemExist() {
@@ -153,7 +150,7 @@ func ShowItem() {
 	}
 }
 
-func SearchItem() {
+func SearchItemMenu() {
 	utils.ClearScreen()
 
 	if IsItemExist() {
@@ -165,7 +162,7 @@ func SearchItem() {
 		fmt.Scan(&keyword)
 
 		utils.ClearScreen()
-		for index, item := range itemList {
+		for index, item := range ItemList {
 			if keyword == item.Name {
 				isFound = true
 				fmt.Println("Hasil pencarian barang:")

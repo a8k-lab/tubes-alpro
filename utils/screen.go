@@ -17,3 +17,9 @@ func ShowEmptyItemList() {
 	fmt.Println("Klik Enter untuk kembali")
 	fmt.Scanln()
 }
+
+func ShowEmptyTransactionList() {
+	fmt.Println("Belum ada transaksi yang tersimpan")
+	fmt.Println("Klik Enter untuk kembali")
+	fmt.Scanln()
+}
