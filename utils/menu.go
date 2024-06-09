@@ -22,6 +22,16 @@ func InputMenu(max int) int {
 	}
 }
 
+func PrintIntro() {
+	ClearScreen()
+	fmt.Println("👋 Selamat datang di aplikasi Jual Beli")
+	fmt.Println("🎨 Crafted by Abdul Malik & Putri Galuh Mandarizka")
+	fmt.Println("😼 GitHub: https://github.com/a8k-lab/tubes-alpro")
+	fmt.Println("---------------------------------------------------")
+	fmt.Println("📦 Klik Enter untuk lanjut ...")
+	fmt.Scanln()
+}
+
 func PrintMainMenu() {
 	fmt.Println("#------------------------#")
 	fmt.Println("#         M E N U        #")

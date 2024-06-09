@@ -14,6 +14,8 @@ func main() {
 }
 
 func mainMenu() {
+	utils.PrintIntro()
+
 	for {
 		utils.ClearScreen()
 		utils.PrintMainMenu()
