@@ -47,7 +47,7 @@ func AddItemMenu() {
 		var newItem Item
 		var isConfirm string
 
-		fmt.Println("🔠 Masukkan nama barang:")
+		fmt.Println("🔠 Masukkan nama barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Name)
 

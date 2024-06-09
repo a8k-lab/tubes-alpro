@@ -35,7 +35,7 @@ func DeleteTransactionByIndex(index int) {
 func ShowTransactionList() {
 	for index, item := range TransactionList {
 		number := index + 1
-		fmt.Printf("%d. Barang %s seharga %d, dibeli oleh %s\n", number, item.Item.Name, item.Quantity, item.BuyerName)
+		fmt.Printf("%d. %s seharga %f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.Price, item.Quantity, item.BuyerName)
 	}
 	fmt.Println("--------------------------")
 }
