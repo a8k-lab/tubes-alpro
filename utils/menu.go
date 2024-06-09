@@ -15,7 +15,7 @@ func InputMenu(max int) int {
 		fmt.Scanln(&selectedNumber)
 
 		if selectedNumber > max || selectedNumber < 1 {
-			fmt.Println("❌ Pilihan tidak valid")
+			fmt.Println("❌ Input tidak valid")
 		} else {
 			return selectedNumber
 		}
