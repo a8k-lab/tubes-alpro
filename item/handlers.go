@@ -67,6 +67,11 @@ func AddItemMenu() {
 		if isConfirm == "y" || isConfirm == "Y" {
 			ItemList = append(ItemList, newItem)
 			return
+		} else if isConfirm == "n" || isConfirm == "N" {
+			return
+		} else {
+			fmt.Print("> ")
+			fmt.Scan(&isConfirm)
 		}
 	}
 }
@@ -95,10 +100,11 @@ func EditItemMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Category)
 
-		fmt.Println("Konfirmasi perubahan:")
-		fmt.Printf("- \"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
-		fmt.Printf("- %.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
-		fmt.Printf("- \"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
+		utils.ClearScreen()
+		fmt.Println("Konfirmasi perubahan barang:")
+		fmt.Printf("🔠 Nama \"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
+		fmt.Printf("💰 Harga %.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
+		fmt.Printf("🏷️ Kategori \"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
@@ -106,6 +112,11 @@ func EditItemMenu() {
 		if isConfirm == "y" || isConfirm == "Y" {
 			ItemList[selectedNumber-1] = newItem
 			return
+		} else if isConfirm == "n" || isConfirm == "N" {
+			return
+		} else {
+			fmt.Print("> ")
+			fmt.Scan(&isConfirm)
 		}
 	} else {
 		utils.ShowEmptyItemList()
@@ -130,6 +141,11 @@ func DeleteItemMenu() {
 		if isConfirm == "y" || isConfirm == "Y" {
 			DeleteItemByIndex(selectedNumber - 1)
 			return
+		} else if isConfirm == "n" || isConfirm == "N" {
+			return
+		} else {
+			fmt.Print("> ")
+			fmt.Scan(&isConfirm)
 		}
 	} else {
 		utils.ShowEmptyItemList()

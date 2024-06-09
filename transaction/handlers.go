@@ -35,7 +35,7 @@ func DeleteTransactionByIndex(index int) {
 func ShowTransactionList() {
 	for index, item := range TransactionList {
 		number := index + 1
-		fmt.Printf("%d. %s x %d\n", number, item.Item.Name, item.Quantity)
+		fmt.Printf("%d. Barang %s seharga %d, dibeli oleh %s\n", number, item.Item.Name, item.Quantity, item.BuyerName)
 	}
 	fmt.Println("--------------------------")
 }
@@ -96,9 +96,10 @@ func EditTransactionMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.BuyerName)
 
-		fmt.Println("Konfirmasi perubahan:")
-		fmt.Printf("- %d diubah menjadi %d\n", selectedTransaction.Quantity, newTransaction.Quantity)
-		fmt.Printf("- \"%s\" diubah menjadi \"%s\"\n", selectedTransaction.BuyerName, newTransaction.BuyerName)
+		utils.ClearScreen()
+		fmt.Println("Konfirmasi perubahan transaksi:")
+		fmt.Printf("🔢 Jumlah %d diubah menjadi %d\n", selectedTransaction.Quantity, newTransaction.Quantity)
+		fmt.Printf("📒 Nama pembeli \"%s\" diubah menjadi \"%s\"\n", selectedTransaction.BuyerName, newTransaction.BuyerName)
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
@@ -106,6 +107,11 @@ func EditTransactionMenu() {
 		if isConfirm == "y" || isConfirm == "Y" {
 			TransactionList[selectedNumber-1] = newTransaction
 			return
+		} else if isConfirm == "n" || isConfirm == "N" {
+			return
+		} else {
+			fmt.Print("> ")
+			fmt.Scan(&isConfirm)
 		}
 	} else {
 		utils.ShowEmptyTransactionList()
@@ -128,13 +134,18 @@ func DeleteTransactionMenu() {
 		fmt.Printf("Jumlah: %d\n", selectedTransaction.Quantity)
 		fmt.Printf("Pembeli: %s\n", selectedTransaction.BuyerName)
 		fmt.Println("--------------------------")
-		fmt.Println("Yakin ingin menghapus transaksi?")
+		fmt.Println("Yakin ingin menghapus transaksi? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
 
 		if isConfirm == "y" || isConfirm == "Y" {
 			DeleteTransactionByIndex(selectedNumber - 1)
 			return
+		} else if isConfirm == "n" || isConfirm == "N" {
+			return
+		} else {
+			fmt.Print("> ")
+			fmt.Scan(&isConfirm)
 		}
 	} else {
 		utils.ShowEmptyTransactionList()
