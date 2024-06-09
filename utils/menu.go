@@ -28,7 +28,7 @@ func PrintIntro() {
 	fmt.Println("🎨 Crafted by Abdul Malik & Putri Galuh Mandarizka")
 	fmt.Println("😼 GitHub: https://github.com/a8k-lab/tubes-alpro")
 	fmt.Println("---------------------------------------------------")
-	fmt.Println("📦 Klik Enter untuk lanjut ...")
+	fmt.Println("▶️ Klik Enter untuk lanjut ...")
 	fmt.Scanln()
 }
 

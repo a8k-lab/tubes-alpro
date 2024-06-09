@@ -34,6 +34,6 @@ func mainMenu() {
 
 func end() {
 	utils.ClearScreen()
-	fmt.Println("Program Berakhir")
+	fmt.Println("🛑 Program Berakhir")
 	os.Exit(0)
 }
