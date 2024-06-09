@@ -42,6 +42,7 @@ func ShowTransactionList() {
 
 func AddTransactionMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Transaksi", "Tambah")
 
 	if item.IsItemExist() {
 		var newTransaction Transaction
@@ -68,7 +69,7 @@ func AddTransactionMenu() {
 		TransactionList = append(TransactionList, newTransaction)
 		utils.ClearScreen()
 		fmt.Println("✅ Transaksi berhasil ditambahkan")
-		fmt.Println("Klik Enter untuk kembali")
+		fmt.Println("Klik enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		fmt.Println("Tidak dapat menambahkan transaksi")
@@ -78,6 +79,7 @@ func AddTransactionMenu() {
 
 func EditTransactionMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Transaksi", "Edit")
 
 	if IsTransactionExist() {
 		var newTransaction Transaction
@@ -120,6 +122,7 @@ func EditTransactionMenu() {
 
 func DeleteTransactionMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Transaksi", "Hapus")
 
 	if IsTransactionExist() {
 		var isConfirm string
@@ -154,10 +157,11 @@ func DeleteTransactionMenu() {
 
 func ShowTransactionMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Transaksi", "Lihat")
 
 	if IsTransactionExist() {
 		ShowTransactionList()
-		fmt.Println("Klik Enter untuk kembali")
+		fmt.Println("Klik enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyTransactionList()

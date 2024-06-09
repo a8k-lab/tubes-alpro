@@ -41,6 +41,7 @@ func ShowItemList() {
 
 func AddItemMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Barang", "Tambah")
 
 	for {
 		var newItem Item
@@ -78,6 +79,7 @@ func AddItemMenu() {
 
 func EditItemMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Barang", "Edit")
 
 	if IsItemExist() {
 		var isConfirm string
@@ -125,6 +127,7 @@ func EditItemMenu() {
 
 func DeleteItemMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Barang", "Hapus")
 
 	if IsItemExist() {
 		var isConfirm string
@@ -154,10 +157,11 @@ func DeleteItemMenu() {
 
 func ShowItemMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Barang", "Lihat")
 
 	if IsItemExist() {
 		ShowItemList()
-		fmt.Println("Klik Enter untuk kembali")
+		fmt.Println("Klik enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyItemList()
@@ -166,6 +170,7 @@ func ShowItemMenu() {
 
 func SearchItemMenu() {
 	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Barang", "Cari")
 
 	if IsItemExist() {
 		var keyword string
@@ -191,7 +196,7 @@ func SearchItemMenu() {
 		if !isFound {
 			fmt.Println("Tidak ada barang yang ditemukan")
 		}
-		fmt.Println("Klik Enter untuk kembali")
+		fmt.Println("Klik enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyItemList()

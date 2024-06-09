@@ -33,9 +33,7 @@ func PrintIntro() {
 }
 
 func PrintMainMenu() {
-	fmt.Println("#------------------------#")
-	fmt.Println("#         M E N U        #")
-	fmt.Println("#------------------------#")
+	PrintBreadcrumb("Menu")
 	fmt.Println("1. Barang 📦              ")
 	fmt.Println("2. Transaksi 💵           ")
 	fmt.Println("3. Keluar ⛔              ")
@@ -43,9 +41,7 @@ func PrintMainMenu() {
 }
 
 func PrintItemMenu() {
-	fmt.Println("#------------------------#")
-	fmt.Println("#     Menu Barang 📦     #")
-	fmt.Println("#------------------------#")
+	PrintBreadcrumb("Menu", "Barang")
 	fmt.Println("1. Tambah ➕")
 	fmt.Println("2. Edit ✏️")
 	fmt.Println("3. Hapus 🗑️")
@@ -56,13 +52,19 @@ func PrintItemMenu() {
 }
 
 func PrintTransactionMenu() {
-	fmt.Println("#------------------------#")
-	fmt.Println("#    Menu Transaksi 💵   #")
-	fmt.Println("#------------------------#")
+	PrintBreadcrumb("Menu", "Transaksi")
 	fmt.Println("1. Tambah ➕")
 	fmt.Println("2. Edit ✏️")
 	fmt.Println("3. Hapus 🗑️")
 	fmt.Println("4. Lihat 📊")
 	fmt.Println("5. Kembali 🔙")
+	fmt.Println("--------------------------")
+}
+
+func PrintBreadcrumb(menus ...string) {
+	for i := 0; i < len(menus)-1; i++ {
+		fmt.Printf("%s > ", menus[i])
+	}
+	fmt.Println(menus[len(menus)-1])
 	fmt.Println("--------------------------")
 }
