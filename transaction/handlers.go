@@ -46,14 +46,15 @@ func AddTransactionMenu() {
 
 	if item.IsItemExist() {
 		var newTransaction Transaction
+		var selectedNumber int
 		var isConfirm bool
 
 		item.ShowItemList()
 		fmt.Println("📦 Masukkan nomor barang")
 
 		itemListLength := len(item.ItemList)
-		selectedItemNumber := utils.InputMenu(itemListLength)
-		selectedItem := item.ItemList[selectedItemNumber-1]
+		utils.InputMenu(&selectedNumber, itemListLength)
+		selectedItem := item.ItemList[selectedNumber-1]
 
 		utils.ClearScreen()
 		fmt.Printf("%s dipilih\n", selectedItem.Name)
@@ -90,11 +91,12 @@ func EditTransactionMenu() {
 
 	if IsTransactionExist() {
 		var newTransaction Transaction
+		var selectedNumber int
 		var isConfirm bool
 
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin diedit")
-		selectedNumber := utils.InputMenu(len(TransactionList))
+		utils.InputMenu(&selectedNumber, len(TransactionList))
 		selectedTransaction := TransactionList[selectedNumber-1]
 
 		utils.ClearScreen()
@@ -130,13 +132,16 @@ func DeleteTransactionMenu() {
 	utils.PrintBreadcrumb("Menu", "Transaksi", "Hapus")
 
 	if IsTransactionExist() {
+		var selectedNumber int
 		var isConfirm bool
 
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin dihapus")
-		selectedNumber := utils.InputMenu(len(TransactionList))
+		utils.InputMenu(&selectedNumber, len(TransactionList))
 		selectedTransaction := TransactionList[selectedNumber-1]
 
+		utils.ClearScreen()
+		fmt.Println("Konfirmasi penghapusan transaksi:")
 		fmt.Printf("Transaksi nomor %d\n", selectedNumber)
 		fmt.Printf("Nama: %s\n", selectedTransaction.Item.Name)
 		fmt.Printf("Jumlah: %d\n", selectedTransaction.Quantity)

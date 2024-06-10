@@ -5,10 +5,12 @@ import (
 )
 
 func ItemMenu() {
+	var selectMenu int
+
 	for {
 		utils.ClearScreen()
 		utils.PrintItemMenu()
-		selectMenu := utils.InputMenu(6)
+		utils.InputMenu(&selectMenu, 6)
 
 		switch selectMenu {
 		case 1:

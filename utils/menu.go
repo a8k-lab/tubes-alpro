@@ -2,9 +2,7 @@ package utils
 
 import "fmt"
 
-func InputMenu(max int) int {
-	var selectedNumber int
-
+func InputMenu(selectedNumber *int, max int) {
 	for {
 		fmt.Print("Pilih (1")
 		for i := 2; i <= max; i++ {
@@ -12,12 +10,12 @@ func InputMenu(max int) int {
 		}
 		fmt.Println(")")
 		fmt.Print("> ")
-		fmt.Scanln(&selectedNumber)
+		fmt.Scanln(selectedNumber)
 
-		if selectedNumber > max || selectedNumber < 1 {
+		if *selectedNumber > max || *selectedNumber < 1 {
 			fmt.Println("❌ Input tidak valid")
 		} else {
-			return selectedNumber
+			return
 		}
 	}
 }
