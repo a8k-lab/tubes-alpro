@@ -66,3 +66,37 @@ func PrintBreadcrumb(menus ...string) {
 	fmt.Println(menus[len(menus)-1])
 	fmt.Println("--------------------------")
 }
+
+func ShowEmptyItemList() {
+	fmt.Println("Belum ada barang yang tersimpan")
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
+}
+
+func ShowEmptyTransactionList() {
+	fmt.Println("Belum ada transaksi yang tersimpan")
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
+}
+
+func ConfirmInput(isConfirm *bool, additionalMessage string) {
+	var input string
+
+	fmt.Println("--------------------------")
+	fmt.Printf("Yakin ingin %s? (y/n):\n", additionalMessage)
+
+	for {
+		fmt.Print("> ")
+		fmt.Scan(&input)
+
+		if input == "y" || input == "Y" {
+			*isConfirm = true
+			return
+		} else if input == "n" || input == "N" {
+			*isConfirm = false
+			return
+		} else {
+			fmt.Println("❌ Input tidak valid")
+		}
+	}
+}
