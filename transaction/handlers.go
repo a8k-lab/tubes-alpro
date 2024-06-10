@@ -75,6 +75,7 @@ func AddTransactionMenu() {
 		if isConfirm {
 			newTransaction.Item = selectedItem
 			TransactionList = append(TransactionList, newTransaction)
+			utils.PrintSuccessMessage("Transaksi berhasil ditambahkan")
 			return
 		} else {
 			return
@@ -120,6 +121,7 @@ func EditTransactionMenu() {
 
 		if isConfirm {
 			TransactionList[selectedNumber-1] = newTransaction
+			utils.PrintSuccessMessage("Transaksi berhasil diubah")
 		}
 		return
 	} else {
@@ -150,6 +152,7 @@ func DeleteTransactionMenu() {
 
 		if isConfirm {
 			DeleteTransactionByIndex(selectedNumber - 1)
+			utils.PrintSuccessMessage("Transaksi berhasil dihapus")
 		}
 		return
 	} else {

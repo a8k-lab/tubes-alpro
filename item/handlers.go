@@ -66,6 +66,7 @@ func AddItemMenu() {
 
 		if isConfirm {
 			ItemList = append(ItemList, newItem)
+			utils.PrintSuccessMessage("Barang berhasil ditambahkan")
 			return
 		} else {
 			return
@@ -113,6 +114,7 @@ func EditItemMenu() {
 
 		if isConfirm {
 			ItemList[selectedNumber-1] = newItem
+			utils.PrintSuccessMessage("Barang berhasil diubah")
 		}
 		return
 	} else {
@@ -135,10 +137,15 @@ func DeleteItemMenu() {
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi penghapusan barang:")
-		utils.ConfirmInput(&isConfirm, "menghapus barang "+selectedItem.Name)
+		fmt.Printf("Nomor: %d\n", selectedNumber)
+		fmt.Printf("Nama: %s\n", selectedItem.Name)
+		fmt.Printf("Harga: %.f\n", selectedItem.Price)
+		fmt.Printf("Kategori: %s\n", selectedItem.Category)
+		utils.ConfirmInput(&isConfirm, "menghapus barang")
 
 		if isConfirm {
 			DeleteItemByIndex(selectedNumber - 1)
+			utils.PrintSuccessMessage("Barang berhasil dihapus")
 		}
 		return
 	} else {

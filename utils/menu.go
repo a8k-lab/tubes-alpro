@@ -67,6 +67,14 @@ func PrintBreadcrumb(menus ...string) {
 	fmt.Println("--------------------------")
 }
 
+func PrintSuccessMessage(message string) {
+	ClearScreen()
+	fmt.Println("✅ " + message)
+	fmt.Println("--------------------------")
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
+}
+
 func ShowEmptyItemList() {
 	fmt.Println("Belum ada barang yang tersimpan")
 	fmt.Println("Klik Enter untuk kembali ...")
