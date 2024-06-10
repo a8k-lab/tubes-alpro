@@ -170,7 +170,7 @@ func ShowItemMenu() {
 
 	if IsItemExist() {
 		ShowItemList()
-		fmt.Println("Klik enter untuk kembali ...")
+		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyItemList()
@@ -205,7 +205,7 @@ func SearchItemMenu() {
 		if !isFound {
 			fmt.Println("Tidak ada barang yang ditemukan")
 		}
-		fmt.Println("Klik enter untuk kembali ...")
+		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyItemList()

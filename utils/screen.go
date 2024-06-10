@@ -26,12 +26,12 @@ func ClearScreen() {
 
 func ShowEmptyItemList() {
 	fmt.Println("Belum ada barang yang tersimpan")
-	fmt.Println("Klik enter untuk kembali ...")
+	fmt.Println("Klik Enter untuk kembali ...")
 	fmt.Scanln()
 }
 
 func ShowEmptyTransactionList() {
 	fmt.Println("Belum ada transaksi yang tersimpan")
-	fmt.Println("Klik enter untuk kembali ...")
+	fmt.Println("Klik Enter untuk kembali ...")
 	fmt.Scanln()
 }

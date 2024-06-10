@@ -69,7 +69,7 @@ func AddTransactionMenu() {
 		TransactionList = append(TransactionList, newTransaction)
 		utils.ClearScreen()
 		fmt.Println("✅ Transaksi berhasil ditambahkan")
-		fmt.Println("Klik enter untuk kembali ...")
+		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		fmt.Println("Tidak dapat menambahkan transaksi")
@@ -167,7 +167,7 @@ func ShowTransactionMenu() {
 
 	if IsTransactionExist() {
 		ShowTransactionList()
-		fmt.Println("Klik enter untuk kembali ...")
+		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyTransactionList()
