@@ -13,7 +13,6 @@ jobs:
         goos:
           - linux
           - windows
-          - darwin
         goarch:
           - amd64
           - arm64
@@ -31,3 +30,5 @@ jobs:
           executable_compression: upx
           md5sum: FALSE
           sha256sum: TRUE
+          binary_name: jual-beli
+          compress_assets: OFF
