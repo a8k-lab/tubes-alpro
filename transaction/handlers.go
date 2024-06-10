@@ -35,7 +35,7 @@ func DeleteTransactionByIndex(index int) {
 func ShowTransactionList() {
 	for index, item := range TransactionList {
 		number := index + 1
-		fmt.Printf("%d. %s seharga %f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.Price, item.Quantity, item.BuyerName)
+		fmt.Printf("%d. %s seharga %.f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.Price, item.Quantity, item.BuyerName)
 	}
 	fmt.Println("--------------------------")
 }
@@ -61,7 +61,7 @@ func AddTransactionMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.Quantity)
 
-		fmt.Println("📒 Masukkan nama pembeli:")
+		fmt.Println("📒 Masukkan nama pembeli (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.BuyerName)
 
@@ -94,7 +94,7 @@ func EditTransactionMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.Quantity)
 
-		fmt.Println("📒 Masukkan nama baru pembeli:")
+		fmt.Println("📒 Masukkan nama baru pembeli (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.BuyerName)
 

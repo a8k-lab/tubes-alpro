@@ -55,7 +55,7 @@ func AddItemMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Price)
 
-		fmt.Println("🏷️  Masukkan kategori barang:")
+		fmt.Println("🏷️  Masukkan kategori barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Category)
 
@@ -90,7 +90,7 @@ func EditItemMenu() {
 		newItem := ItemList[selectedNumber-1]
 		selectedItem := ItemList[selectedNumber-1]
 
-		fmt.Println("🔠 Masukkan nama baru barang:")
+		fmt.Println("🔠 Masukkan nama baru barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Name)
 
@@ -98,7 +98,7 @@ func EditItemMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Price)
 
-		fmt.Println("🏷️  Masukkan kategori baru barang:")
+		fmt.Println("🏷️  Masukkan kategori baru barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Category)
 
