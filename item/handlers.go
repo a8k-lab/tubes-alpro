@@ -45,7 +45,7 @@ func AddItemMenu() {
 
 	for {
 		var newItem Item
-		var isConfirm string
+		var isConfirm bool
 
 		fmt.Println("🔠 Masukkan nama barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
@@ -55,24 +55,21 @@ func AddItemMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Price)
 
-		fmt.Println("🏷️  Masukkan kategori barang:")
+		fmt.Println("🏷️  Masukkan kategori barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Category)
 
-		fmt.Println("Konfirmasi barang:")
+		utils.ClearScreen()
+		fmt.Println("Konfirmasi penambahan barang:")
 		fmt.Printf("%s seharga %.f dengan kategori %s\n", newItem.Name, newItem.Price, newItem.Category)
-		fmt.Println("Apa sudah benar? (y/n):")
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ConfirmInput(&isConfirm, "menambahkan barang")
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			ItemList = append(ItemList, newItem)
-			return
-		} else if isConfirm == "n" || isConfirm == "N" {
+			utils.PrintSuccessMessage("Barang berhasil ditambahkan")
 			return
 		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
+			return
 		}
 	}
 }
@@ -82,44 +79,44 @@ func EditItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Edit")
 
 	if IsItemExist() {
-		var isConfirm string
+		var selectedNumber int
+		var isConfirm bool
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin diedit")
-		selectedNumber := utils.InputMenu(len(ItemList))
+		utils.InputMenu(&selectedNumber, len(ItemList))
 		newItem := ItemList[selectedNumber-1]
 		selectedItem := ItemList[selectedNumber-1]
 
-		fmt.Println("🔠 Masukkan nama baru barang:")
+		utils.ClearScreen()
+		fmt.Printf("Edit data barang \"%s\"\n", selectedItem.Name)
+		fmt.Println("Kosongkan input jika tidak ingin diubah")
+		fmt.Println("--------------------------")
+
+		fmt.Println("🔠 Masukkan nama baru barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
-		fmt.Scan(&newItem.Name)
+		fmt.Scanln(&newItem.Name)
 
 		fmt.Println("💰 Masukkan harga baru barang:")
 		fmt.Print("> ")
-		fmt.Scan(&newItem.Price)
+		fmt.Scanln(&newItem.Price)
 
-		fmt.Println("🏷️  Masukkan kategori baru barang:")
+		fmt.Println("🏷️ Masukkan kategori baru barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
-		fmt.Scan(&newItem.Category)
+		fmt.Scanln(&newItem.Category)
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi perubahan barang:")
 		fmt.Printf("🔠 Nama \"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
 		fmt.Printf("💰 Harga %.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
 		fmt.Printf("🏷️ Kategori \"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
-		fmt.Println("Apa sudah benar? (y/n):")
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ConfirmInput(&isConfirm, "mengedit barang")
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			ItemList[selectedNumber-1] = newItem
-			return
-		} else if isConfirm == "n" || isConfirm == "N" {
-			return
-		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
+			utils.PrintSuccessMessage("Barang berhasil diubah")
 		}
+		return
 	} else {
 		utils.ShowEmptyItemList()
 	}
@@ -130,26 +127,27 @@ func DeleteItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Hapus")
 
 	if IsItemExist() {
-		var isConfirm string
+		var selectedNumber int
+		var isConfirm bool
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin dihapus")
-		selectedNumber := utils.InputMenu(len(ItemList))
+		utils.InputMenu(&selectedNumber, len(ItemList))
 		selectedItem := ItemList[selectedNumber-1]
 
-		fmt.Printf("Yakin ingin menghapus \"%s\"? (y/n):\n", selectedItem.Name)
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ClearScreen()
+		fmt.Println("Konfirmasi penghapusan barang:")
+		fmt.Printf("Nomor: %d\n", selectedNumber)
+		fmt.Printf("Nama: %s\n", selectedItem.Name)
+		fmt.Printf("Harga: %.f\n", selectedItem.Price)
+		fmt.Printf("Kategori: %s\n", selectedItem.Category)
+		utils.ConfirmInput(&isConfirm, "menghapus barang")
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			DeleteItemByIndex(selectedNumber - 1)
-			return
-		} else if isConfirm == "n" || isConfirm == "N" {
-			return
-		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
+			utils.PrintSuccessMessage("Barang berhasil dihapus")
 		}
+		return
 	} else {
 		utils.ShowEmptyItemList()
 	}
@@ -161,7 +159,7 @@ func ShowItemMenu() {
 
 	if IsItemExist() {
 		ShowItemList()
-		fmt.Println("Klik enter untuk kembali ...")
+		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyItemList()
@@ -196,7 +194,7 @@ func SearchItemMenu() {
 		if !isFound {
 			fmt.Println("Tidak ada barang yang ditemukan")
 		}
-		fmt.Println("Klik enter untuk kembali ...")
+		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyItemList()

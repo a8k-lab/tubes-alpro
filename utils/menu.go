@@ -2,9 +2,7 @@ package utils
 
 import "fmt"
 
-func InputMenu(max int) int {
-	var selectedNumber int
-
+func InputMenu(selectedNumber *int, max int) {
 	for {
 		fmt.Print("Pilih (1")
 		for i := 2; i <= max; i++ {
@@ -12,12 +10,12 @@ func InputMenu(max int) int {
 		}
 		fmt.Println(")")
 		fmt.Print("> ")
-		fmt.Scanln(&selectedNumber)
+		fmt.Scanln(selectedNumber)
 
-		if selectedNumber > max || selectedNumber < 1 {
+		if *selectedNumber > max || *selectedNumber < 1 {
 			fmt.Println("❌ Input tidak valid")
 		} else {
-			return selectedNumber
+			return
 		}
 	}
 }
@@ -67,4 +65,46 @@ func PrintBreadcrumb(menus ...string) {
 	}
 	fmt.Println(menus[len(menus)-1])
 	fmt.Println("--------------------------")
+}
+
+func PrintSuccessMessage(message string) {
+	ClearScreen()
+	fmt.Println("✅ " + message)
+	fmt.Println("--------------------------")
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
+}
+
+func ShowEmptyItemList() {
+	fmt.Println("Belum ada barang yang tersimpan")
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
+}
+
+func ShowEmptyTransactionList() {
+	fmt.Println("Belum ada transaksi yang tersimpan")
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
+}
+
+func ConfirmInput(isConfirm *bool, additionalMessage string) {
+	var input string
+
+	fmt.Println("--------------------------")
+	fmt.Printf("Yakin ingin %s? (y/n):\n", additionalMessage)
+
+	for {
+		fmt.Print("> ")
+		fmt.Scan(&input)
+
+		if input == "y" || input == "Y" {
+			*isConfirm = true
+			return
+		} else if input == "n" || input == "N" {
+			*isConfirm = false
+			return
+		} else {
+			fmt.Println("❌ Input tidak valid")
+		}
+	}
 }

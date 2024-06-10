@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -22,16 +21,4 @@ func ClearScreen() {
 	default:
 		runCmd("clear")
 	}
-}
-
-func ShowEmptyItemList() {
-	fmt.Println("Belum ada barang yang tersimpan")
-	fmt.Println("Klik enter untuk kembali ...")
-	fmt.Scanln()
-}
-
-func ShowEmptyTransactionList() {
-	fmt.Println("Belum ada transaksi yang tersimpan")
-	fmt.Println("Klik enter untuk kembali ...")
-	fmt.Scanln()
 }

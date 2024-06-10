@@ -35,7 +35,7 @@ func DeleteTransactionByIndex(index int) {
 func ShowTransactionList() {
 	for index, item := range TransactionList {
 		number := index + 1
-		fmt.Printf("%d. %s seharga %f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.Price, item.Quantity, item.BuyerName)
+		fmt.Printf("%d. %s seharga %.f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.Price, item.Quantity, item.BuyerName)
 	}
 	fmt.Println("--------------------------")
 }
@@ -46,13 +46,15 @@ func AddTransactionMenu() {
 
 	if item.IsItemExist() {
 		var newTransaction Transaction
+		var selectedNumber int
+		var isConfirm bool
 
 		item.ShowItemList()
 		fmt.Println("📦 Masukkan nomor barang")
 
 		itemListLength := len(item.ItemList)
-		selectedItemNumber := utils.InputMenu(itemListLength)
-		selectedItem := item.ItemList[selectedItemNumber-1]
+		utils.InputMenu(&selectedNumber, itemListLength)
+		selectedItem := item.ItemList[selectedNumber-1]
 
 		utils.ClearScreen()
 		fmt.Printf("%s dipilih\n", selectedItem.Name)
@@ -61,16 +63,23 @@ func AddTransactionMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.Quantity)
 
-		fmt.Println("📒 Masukkan nama pembeli:")
+		fmt.Println("📒 Masukkan nama pembeli (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.BuyerName)
 
-		newTransaction.Item = selectedItem
-		TransactionList = append(TransactionList, newTransaction)
 		utils.ClearScreen()
-		fmt.Println("✅ Transaksi berhasil ditambahkan")
-		fmt.Println("Klik enter untuk kembali ...")
-		fmt.Scanln()
+		fmt.Println("Konfirmasi penambahan transaksi:")
+		fmt.Printf("%s sebanyak %d, untuk pembeli %s\n", selectedItem.Name, newTransaction.Quantity, newTransaction.BuyerName)
+		utils.ConfirmInput(&isConfirm, "menambahkan transaksi")
+
+		if isConfirm {
+			newTransaction.Item = selectedItem
+			TransactionList = append(TransactionList, newTransaction)
+			utils.PrintSuccessMessage("Transaksi berhasil ditambahkan")
+			return
+		} else {
+			return
+		}
 	} else {
 		fmt.Println("Tidak dapat menambahkan transaksi")
 		utils.ShowEmptyItemList()
@@ -83,38 +92,38 @@ func EditTransactionMenu() {
 
 	if IsTransactionExist() {
 		var newTransaction Transaction
-		var isConfirm string
+		var selectedNumber int
+		var isConfirm bool
 
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin diedit")
-		selectedNumber := utils.InputMenu(len(TransactionList))
+		utils.InputMenu(&selectedNumber, len(TransactionList))
 		selectedTransaction := TransactionList[selectedNumber-1]
+
+		utils.ClearScreen()
+		fmt.Printf("Edit data transaksi \"%d\"\n", selectedNumber)
+		fmt.Println("Kosongkan input jika tidak ingin diubah")
+		fmt.Println("--------------------------")
 
 		fmt.Println("🔢 Masukkan jumlah baru barang:")
 		fmt.Print("> ")
-		fmt.Scan(&newTransaction.Quantity)
+		fmt.Scanln(&newTransaction.Quantity)
 
-		fmt.Println("📒 Masukkan nama baru pembeli:")
+		fmt.Println("📒 Masukkan nama baru pembeli (tidak boleh ada spasi):")
 		fmt.Print("> ")
-		fmt.Scan(&newTransaction.BuyerName)
+		fmt.Scanln(&newTransaction.BuyerName)
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi perubahan transaksi:")
 		fmt.Printf("🔢 Jumlah %d diubah menjadi %d\n", selectedTransaction.Quantity, newTransaction.Quantity)
 		fmt.Printf("📒 Nama pembeli \"%s\" diubah menjadi \"%s\"\n", selectedTransaction.BuyerName, newTransaction.BuyerName)
-		fmt.Println("Apa sudah benar? (y/n):")
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ConfirmInput(&isConfirm, "mengedit transaksi")
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			TransactionList[selectedNumber-1] = newTransaction
-			return
-		} else if isConfirm == "n" || isConfirm == "N" {
-			return
-		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
+			utils.PrintSuccessMessage("Transaksi berhasil diubah")
 		}
+		return
 	} else {
 		utils.ShowEmptyTransactionList()
 	}
@@ -125,31 +134,27 @@ func DeleteTransactionMenu() {
 	utils.PrintBreadcrumb("Menu", "Transaksi", "Hapus")
 
 	if IsTransactionExist() {
-		var isConfirm string
+		var selectedNumber int
+		var isConfirm bool
 
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin dihapus")
-		selectedNumber := utils.InputMenu(len(TransactionList))
+		utils.InputMenu(&selectedNumber, len(TransactionList))
 		selectedTransaction := TransactionList[selectedNumber-1]
 
+		utils.ClearScreen()
+		fmt.Println("Konfirmasi penghapusan transaksi:")
 		fmt.Printf("Transaksi nomor %d\n", selectedNumber)
 		fmt.Printf("Nama: %s\n", selectedTransaction.Item.Name)
 		fmt.Printf("Jumlah: %d\n", selectedTransaction.Quantity)
 		fmt.Printf("Pembeli: %s\n", selectedTransaction.BuyerName)
-		fmt.Println("--------------------------")
-		fmt.Println("Yakin ingin menghapus transaksi? (y/n):")
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ConfirmInput(&isConfirm, "menghapus transaksi")
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			DeleteTransactionByIndex(selectedNumber - 1)
-			return
-		} else if isConfirm == "n" || isConfirm == "N" {
-			return
-		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
+			utils.PrintSuccessMessage("Transaksi berhasil dihapus")
 		}
+		return
 	} else {
 		utils.ShowEmptyTransactionList()
 	}
@@ -161,7 +166,7 @@ func ShowTransactionMenu() {
 
 	if IsTransactionExist() {
 		ShowTransactionList()
-		fmt.Println("Klik enter untuk kembali ...")
+		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
 		utils.ShowEmptyTransactionList()

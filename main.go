@@ -17,9 +17,10 @@ func mainMenu() {
 	utils.PrintIntro()
 
 	for {
+		var selectMenu int
 		utils.ClearScreen()
 		utils.PrintMainMenu()
-		selectMenu := utils.InputMenu(3)
+		utils.InputMenu(&selectMenu, 3)
 
 		switch selectMenu {
 		case 1:
