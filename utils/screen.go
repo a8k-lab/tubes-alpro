@@ -35,3 +35,25 @@ func ShowEmptyTransactionList() {
 	fmt.Println("Klik Enter untuk kembali ...")
 	fmt.Scanln()
 }
+
+func ConfirmInput(isConfirm *bool, additionalMessage string) {
+	var input string
+
+	fmt.Println("--------------------------")
+	fmt.Printf("Yakin ingin %s? (y/n):\n", additionalMessage)
+
+	for {
+		fmt.Print("> ")
+		fmt.Scan(&input)
+
+		if input == "y" || input == "Y" {
+			*isConfirm = true
+			return
+		} else if input == "n" || input == "N" {
+			*isConfirm = false
+			return
+		} else {
+			fmt.Println("❌ Input tidak valid")
+		}
+	}
+}

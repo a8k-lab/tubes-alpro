@@ -45,7 +45,7 @@ func AddItemMenu() {
 
 	for {
 		var newItem Item
-		var isConfirm string
+		var isConfirm bool
 
 		fmt.Println("🔠 Masukkan nama barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
@@ -62,19 +62,13 @@ func AddItemMenu() {
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi penambahan barang:")
 		fmt.Printf("%s seharga %.f dengan kategori %s\n", newItem.Name, newItem.Price, newItem.Category)
-		fmt.Println("--------------------------")
-		fmt.Println("Apa sudah benar? (y/n):")
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ConfirmInput(&isConfirm, "menambahkan barang")
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			ItemList = append(ItemList, newItem)
 			return
-		} else if isConfirm == "n" || isConfirm == "N" {
-			return
 		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
+			return
 		}
 	}
 }
@@ -84,7 +78,7 @@ func EditItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Edit")
 
 	if IsItemExist() {
-		var isConfirm string
+		var isConfirm bool
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin diedit")
@@ -114,20 +108,12 @@ func EditItemMenu() {
 		fmt.Printf("🔠 Nama \"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
 		fmt.Printf("💰 Harga %.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
 		fmt.Printf("🏷️ Kategori \"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
-		fmt.Println("--------------------------")
-		fmt.Println("Apa sudah benar? (y/n):")
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ConfirmInput(&isConfirm, "mengedit barang")
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			ItemList[selectedNumber-1] = newItem
-			return
-		} else if isConfirm == "n" || isConfirm == "N" {
-			return
-		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
 		}
+		return
 	} else {
 		utils.ShowEmptyItemList()
 	}
@@ -138,27 +124,19 @@ func DeleteItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Hapus")
 
 	if IsItemExist() {
-		var isConfirm string
+		var isConfirm bool
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin dihapus")
 		selectedNumber := utils.InputMenu(len(ItemList))
 		selectedItem := ItemList[selectedNumber-1]
 
-		fmt.Println("--------------------------")
-		fmt.Printf("Yakin ingin menghapus \"%s\"? (y/n):\n", selectedItem.Name)
-		fmt.Print("> ")
-		fmt.Scan(&isConfirm)
+		utils.ConfirmInput(&isConfirm, "menghapus barang "+selectedItem.Name)
 
-		if isConfirm == "y" || isConfirm == "Y" {
+		if isConfirm {
 			DeleteItemByIndex(selectedNumber - 1)
-			return
-		} else if isConfirm == "n" || isConfirm == "N" {
-			return
-		} else {
-			fmt.Print("> ")
-			fmt.Scan(&isConfirm)
 		}
+		return
 	} else {
 		utils.ShowEmptyItemList()
 	}
