@@ -90,18 +90,24 @@ func EditTransactionMenu() {
 		selectedNumber := utils.InputMenu(len(TransactionList))
 		selectedTransaction := TransactionList[selectedNumber-1]
 
+		utils.ClearScreen()
+		fmt.Printf("Edit data transaksi \"%d\"\n", selectedNumber)
+		fmt.Println("Kosongkan input jika tidak ingin diubah")
+		fmt.Println("--------------------------")
+
 		fmt.Println("🔢 Masukkan jumlah baru barang:")
 		fmt.Print("> ")
-		fmt.Scan(&newTransaction.Quantity)
+		fmt.Scanln(&newTransaction.Quantity)
 
 		fmt.Println("📒 Masukkan nama baru pembeli (tidak boleh ada spasi):")
 		fmt.Print("> ")
-		fmt.Scan(&newTransaction.BuyerName)
+		fmt.Scanln(&newTransaction.BuyerName)
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi perubahan transaksi:")
 		fmt.Printf("🔢 Jumlah %d diubah menjadi %d\n", selectedTransaction.Quantity, newTransaction.Quantity)
 		fmt.Printf("📒 Nama pembeli \"%s\" diubah menjadi \"%s\"\n", selectedTransaction.BuyerName, newTransaction.BuyerName)
+		fmt.Println("--------------------------")
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)

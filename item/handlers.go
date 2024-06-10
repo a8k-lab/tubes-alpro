@@ -59,8 +59,10 @@ func AddItemMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Category)
 
-		fmt.Println("Konfirmasi barang:")
+		utils.ClearScreen()
+		fmt.Println("Konfirmasi penambahan barang:")
 		fmt.Printf("%s seharga %.f dengan kategori %s\n", newItem.Name, newItem.Price, newItem.Category)
+		fmt.Println("--------------------------")
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
@@ -90,23 +92,29 @@ func EditItemMenu() {
 		newItem := ItemList[selectedNumber-1]
 		selectedItem := ItemList[selectedNumber-1]
 
+		utils.ClearScreen()
+		fmt.Printf("Edit data barang \"%s\"\n", selectedItem.Name)
+		fmt.Println("Kosongkan input jika tidak ingin diubah")
+		fmt.Println("--------------------------")
+
 		fmt.Println("🔠 Masukkan nama baru barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
-		fmt.Scan(&newItem.Name)
+		fmt.Scanln(&newItem.Name)
 
 		fmt.Println("💰 Masukkan harga baru barang:")
 		fmt.Print("> ")
-		fmt.Scan(&newItem.Price)
+		fmt.Scanln(&newItem.Price)
 
-		fmt.Println("🏷️  Masukkan kategori baru barang (tidak boleh ada spasi):")
+		fmt.Println("🏷️ Masukkan kategori baru barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
-		fmt.Scan(&newItem.Category)
+		fmt.Scanln(&newItem.Category)
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi perubahan barang:")
 		fmt.Printf("🔠 Nama \"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
 		fmt.Printf("💰 Harga %.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
 		fmt.Printf("🏷️ Kategori \"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
+		fmt.Println("--------------------------")
 		fmt.Println("Apa sudah benar? (y/n):")
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
@@ -137,6 +145,7 @@ func DeleteItemMenu() {
 		selectedNumber := utils.InputMenu(len(ItemList))
 		selectedItem := ItemList[selectedNumber-1]
 
+		fmt.Println("--------------------------")
 		fmt.Printf("Yakin ingin menghapus \"%s\"? (y/n):\n", selectedItem.Name)
 		fmt.Print("> ")
 		fmt.Scan(&isConfirm)
