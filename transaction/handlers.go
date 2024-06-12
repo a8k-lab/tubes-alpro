@@ -98,6 +98,7 @@ func EditTransactionMenu() {
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin diedit")
 		utils.InputMenu(&selectedNumber, len(TransactionList))
+		newTransaction = TransactionList[selectedNumber-1]
 		selectedTransaction := TransactionList[selectedNumber-1]
 
 		utils.ClearScreen()
@@ -120,6 +121,7 @@ func EditTransactionMenu() {
 		utils.ConfirmInput(&isConfirm, "mengedit transaksi")
 
 		if isConfirm {
+			newTransaction.Item = selectedTransaction.Item
 			TransactionList[selectedNumber-1] = newTransaction
 			utils.PrintSuccessMessage("Transaksi berhasil diubah")
 		}
