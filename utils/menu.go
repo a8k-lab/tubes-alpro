@@ -55,7 +55,9 @@ func PrintTransactionMenu() {
 	fmt.Println("2. Edit ✏️")
 	fmt.Println("3. Hapus 🗑️")
 	fmt.Println("4. Lihat 📊")
-	fmt.Println("5. Kembali 🔙")
+	fmt.Println("5. Data modal ")
+	fmt.Println("6. Data pendapatan ")
+	fmt.Println("7. Kembali 🔙")
 	fmt.Println("--------------------------")
 }
 
