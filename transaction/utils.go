@@ -25,30 +25,6 @@ func GetSumIncome() float64 {
 	return sumIncome
 }
 
-func GetSortedItemsBySold() item.TabItem {
-	var sortedItemList item.TabItem
-	var pass, i, n int
-	var temp item.Item
-
-	sortedItemList = item.ItemList
-	pass = 1
-	n = len(item.ItemList)
-
-	for pass <= n-1 {
-		i = pass
-		temp = sortedItemList[pass]
-		for i > 0 && temp.TotalSold > sortedItemList[i-1].TotalSold {
-			sortedItemList[i] = sortedItemList[i-1]
-			i--
-		}
-
-		sortedItemList[i] = temp
-		pass++
-	}
-
-	return sortedItemList
-}
-
 func DeleteTransactionByIndex(index int) {
 	var newTransactionList TabTransaction
 
@@ -82,7 +58,7 @@ func ShowTransactionList() {
 }
 
 func ShowMostSoldItemList() {
-	sortedItemsBySold := GetSortedItemsBySold()
+	sortedItemsBySold := item.GetSortedItemsBySold()
 	for index, item := range sortedItemsBySold {
 		if index == 5 {
 			return
