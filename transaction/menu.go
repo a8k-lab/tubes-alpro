@@ -10,7 +10,7 @@ func TransactionMenu() {
 	for {
 		utils.ClearScreen()
 		utils.PrintTransactionMenu()
-		utils.InputMenu(&selectMenu, 6)
+		utils.InputMenu(&selectMenu, 8)
 
 		switch selectMenu {
 		case 1:
@@ -26,6 +26,8 @@ func TransactionMenu() {
 		case 6:
 			ShowIncomeMenu()
 		case 7:
+			ShowMostSoldsMenu()
+		case 8:
 			return
 		}
 	}

@@ -42,6 +42,10 @@ func DeleteTransactionByIndex(index int) {
 	for i := 0; i < len(TransactionList); i++ {
 		if i != index {
 			newTransactionList = append(newTransactionList, TransactionList[i])
+		} else {
+			itemName := TransactionList[i].Item.Name
+			itemIndex := item.GetItemByName(itemName)
+			item.ItemList[itemIndex].TotalSold -= TransactionList[i].Quantity
 		}
 	}
 
@@ -57,9 +61,45 @@ func ShowItemList() {
 }
 
 func ShowTransactionList() {
-	for index, item := range TransactionList {
+	for index, transaction := range TransactionList {
 		number := index + 1
-		fmt.Printf("%d. %s seharga %.f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.SalePrice, item.Quantity, item.BuyerName)
+		fmt.Printf("%d. %s seharga %.f dengan banyak %d, dibeli oleh %s\n", number, transaction.Item.Name, transaction.Item.SalePrice, transaction.Quantity, transaction.BuyerName)
+	}
+	fmt.Println("--------------------------")
+}
+
+func GetSortedItemsBySold() item.TabItem {
+	var sortedItemList item.TabItem
+	var pass, i, n int
+	var temp item.Item
+
+	sortedItemList = item.ItemList
+	pass = 1
+	n = len(item.ItemList)
+
+	for pass <= n-1 {
+		i = pass
+		temp = sortedItemList[pass]
+		for i > 0 && temp.TotalSold > sortedItemList[i-1].TotalSold {
+			sortedItemList[i] = sortedItemList[i-1]
+			i--
+		}
+
+		sortedItemList[i] = temp
+		pass++
+	}
+
+	return sortedItemList
+}
+
+func ShowMostSoldItemList() {
+	sortedItemsBySold := GetSortedItemsBySold()
+	for index, item := range sortedItemsBySold {
+		if index == 5 {
+			return
+		}
+		number := index + 1
+		fmt.Printf("%d. %s terjual sebanyak %d\n", number, item.Name, item.TotalSold)
 	}
 	fmt.Println("--------------------------")
 }
@@ -90,6 +130,8 @@ func AddTransactionMenu() {
 		fmt.Println("📒 Masukkan nama pembeli (tidak boleh ada spasi):")
 		fmt.Print("> ")
 		fmt.Scan(&newTransaction.BuyerName)
+
+		item.ItemList[selectedNumber-1].TotalSold += newTransaction.Quantity
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi penambahan transaksi:")
@@ -145,6 +187,14 @@ func EditTransactionMenu() {
 		utils.ConfirmInput(&isConfirm, "mengedit transaksi")
 
 		if isConfirm {
+			itemName := selectedTransaction.Item.Name
+			itemIndex := item.GetItemByName(itemName)
+			if newTransaction.Quantity > selectedTransaction.Quantity {
+				item.ItemList[itemIndex].TotalSold += newTransaction.Quantity - selectedTransaction.Quantity
+			} else {
+				item.ItemList[itemIndex].TotalSold -= selectedTransaction.Quantity - newTransaction.Quantity
+			}
+
 			newTransaction.Item = selectedTransaction.Item
 			TransactionList[selectedNumber-1] = newTransaction
 			utils.PrintSuccessMessage("Transaksi berhasil diubah")
@@ -217,4 +267,18 @@ func ShowIncomeMenu() {
 	fmt.Printf("Data pendapatan saat ini adalah %.f\n", sumIncome)
 	fmt.Println("Klik Enter untuk kembali ...")
 	fmt.Scanln()
+}
+
+func ShowMostSoldsMenu() {
+	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Barang", "Paling banyak terjual")
+
+	if IsTransactionExist() {
+		fmt.Println("5 barang yang paling banyak terjual")
+		ShowMostSoldItemList()
+		fmt.Println("Klik Enter untuk kembali ...")
+		fmt.Scanln()
+	} else {
+		utils.ShowEmptyTransactionList()
+	}
 }

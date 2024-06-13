@@ -10,6 +10,7 @@ type Item struct {
 	CapitalPrice float64
 	SalePrice    float64
 	Category     string
+	TotalSold    int
 }
 
 type TabItem []Item
@@ -18,6 +19,15 @@ var ItemList TabItem
 
 func IsItemExist() bool {
 	return len(ItemList) > 0
+}
+
+func GetItemIndexByName(name string) int {
+	for index, item := range ItemList {
+		if item.Name == name {
+			return index
+		}
+	}
+	return -1
 }
 
 func DeleteItemByIndex(index int) {
@@ -47,6 +57,8 @@ func AddItemMenu() {
 	for {
 		var newItem Item
 		var isConfirm bool
+
+		newItem.TotalSold = 0
 
 		fmt.Println("🔠 Masukkan nama barang (tidak boleh ada spasi):")
 		fmt.Print("> ")

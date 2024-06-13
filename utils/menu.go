@@ -57,7 +57,8 @@ func PrintTransactionMenu() {
 	fmt.Println("4. Lihat 📊")
 	fmt.Println("5. Data modal ")
 	fmt.Println("6. Data pendapatan ")
-	fmt.Println("7. Kembali 🔙")
+	fmt.Println("7. Lihat paling banyak terjual ")
+	fmt.Println("8. Kembali 🔙")
 	fmt.Println("--------------------------")
 }
 
