@@ -44,7 +44,7 @@ func DeleteTransactionByIndex(index int) {
 			newTransactionList = append(newTransactionList, TransactionList[i])
 		} else {
 			itemName := TransactionList[i].Item.Name
-			itemIndex := item.GetItemByName(itemName)
+			itemIndex := item.GetItemIndexByName(itemName)
 			item.ItemList[itemIndex].TotalSold -= TransactionList[i].Quantity
 		}
 	}
@@ -110,15 +110,16 @@ func AddTransactionMenu() {
 
 	if item.IsItemExist() {
 		var newTransaction Transaction
-		var selectedNumber int
+		var selectedItem item.Item
+		var selectedNumber, itemListLength int
 		var isConfirm bool
 
 		ShowItemList()
 		fmt.Println("📦 Masukkan nomor barang")
 
-		itemListLength := len(item.ItemList)
+		itemListLength = len(item.ItemList)
 		utils.InputMenu(&selectedNumber, itemListLength)
-		selectedItem := item.ItemList[selectedNumber-1]
+		selectedItem = item.ItemList[selectedNumber-1]
 
 		utils.ClearScreen()
 		fmt.Printf("%s dipilih\n", selectedItem.Name)
@@ -157,7 +158,7 @@ func EditTransactionMenu() {
 	utils.PrintBreadcrumb("Menu", "Transaksi", "Edit")
 
 	if IsTransactionExist() {
-		var newTransaction Transaction
+		var newTransaction, selectedTransaction Transaction
 		var selectedNumber int
 		var isConfirm bool
 
@@ -165,7 +166,7 @@ func EditTransactionMenu() {
 		fmt.Println("Masukkan nomor transaksi yang ingin diedit")
 		utils.InputMenu(&selectedNumber, len(TransactionList))
 		newTransaction = TransactionList[selectedNumber-1]
-		selectedTransaction := TransactionList[selectedNumber-1]
+		selectedTransaction = TransactionList[selectedNumber-1]
 
 		utils.ClearScreen()
 		fmt.Printf("Edit data transaksi \"%d\"\n", selectedNumber)
@@ -188,7 +189,7 @@ func EditTransactionMenu() {
 
 		if isConfirm {
 			itemName := selectedTransaction.Item.Name
-			itemIndex := item.GetItemByName(itemName)
+			itemIndex := item.GetItemIndexByName(itemName)
 			if newTransaction.Quantity > selectedTransaction.Quantity {
 				item.ItemList[itemIndex].TotalSold += newTransaction.Quantity - selectedTransaction.Quantity
 			} else {
@@ -210,13 +211,14 @@ func DeleteTransactionMenu() {
 	utils.PrintBreadcrumb("Menu", "Transaksi", "Hapus")
 
 	if IsTransactionExist() {
+		var selectedTransaction Transaction
 		var selectedNumber int
 		var isConfirm bool
 
 		ShowTransactionList()
 		fmt.Println("Masukkan nomor transaksi yang ingin dihapus")
 		utils.InputMenu(&selectedNumber, len(TransactionList))
-		selectedTransaction := TransactionList[selectedNumber-1]
+		selectedTransaction = TransactionList[selectedNumber-1]
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi penghapusan transaksi:")

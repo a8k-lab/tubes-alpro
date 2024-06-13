@@ -96,7 +96,7 @@ func EditItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Edit")
 
 	if IsItemExist() {
-		var newItem Item
+		var newItem, selectedItem Item
 		var selectedNumber int
 		var isConfirm bool
 
@@ -104,7 +104,7 @@ func EditItemMenu() {
 		fmt.Println("Masukkan nomor barang yang ingin diedit")
 		utils.InputMenu(&selectedNumber, len(ItemList))
 		newItem = ItemList[selectedNumber-1]
-		selectedItem := ItemList[selectedNumber-1]
+		selectedItem = ItemList[selectedNumber-1]
 
 		utils.ClearScreen()
 		fmt.Printf("Edit data barang \"%s\"\n", selectedItem.Name)
@@ -150,13 +150,14 @@ func DeleteItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Hapus")
 
 	if IsItemExist() {
+		var selectedItem Item
 		var selectedNumber int
 		var isConfirm bool
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin dihapus")
 		utils.InputMenu(&selectedNumber, len(ItemList))
-		selectedItem := ItemList[selectedNumber-1]
+		selectedItem = ItemList[selectedNumber-1]
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi penghapusan barang:")
