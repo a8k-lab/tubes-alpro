@@ -20,6 +20,22 @@ func IsTransactionExist() bool {
 	return len(TransactionList) > 0
 }
 
+func GetSumCapital() float64 {
+	var sumCapital float64
+	for _, item := range item.ItemList {
+		sumCapital += item.CapitalPrice
+	}
+	return sumCapital
+}
+
+func GetSumIncome() float64 {
+	var sumIncome float64
+	for _, transaction := range TransactionList {
+		sumIncome += float64(transaction.Quantity) * transaction.Item.SalePrice
+	}
+	return sumIncome
+}
+
 func DeleteTransactionByIndex(index int) {
 	var newTransactionList TabTransaction
 
@@ -32,10 +48,18 @@ func DeleteTransactionByIndex(index int) {
 	TransactionList = newTransactionList
 }
 
+func ShowItemList() {
+	for index, item := range item.ItemList {
+		number := index + 1
+		fmt.Printf("%d. %s seharga %.f ada di kategori %s\n", number, item.Name, item.SalePrice, item.Category)
+	}
+	fmt.Println("--------------------------")
+}
+
 func ShowTransactionList() {
 	for index, item := range TransactionList {
 		number := index + 1
-		fmt.Printf("%d. %s seharga %.f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.Price, item.Quantity, item.BuyerName)
+		fmt.Printf("%d. %s seharga %.f dengan banyak %d, dibeli oleh %s\n", number, item.Item.Name, item.Item.SalePrice, item.Quantity, item.BuyerName)
 	}
 	fmt.Println("--------------------------")
 }
@@ -49,7 +73,7 @@ func AddTransactionMenu() {
 		var selectedNumber int
 		var isConfirm bool
 
-		item.ShowItemList()
+		ShowItemList()
 		fmt.Println("📦 Masukkan nomor barang")
 
 		itemListLength := len(item.ItemList)
@@ -173,4 +197,24 @@ func ShowTransactionMenu() {
 	} else {
 		utils.ShowEmptyTransactionList()
 	}
+}
+
+func ShowCapitalMenu() {
+	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Transaksi", "Data modal")
+
+	sumCapital := GetSumCapital()
+	fmt.Printf("Data modal saat ini adalah %.f\n", sumCapital)
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
+}
+
+func ShowIncomeMenu() {
+	utils.ClearScreen()
+	utils.PrintBreadcrumb("Menu", "Transaksi", "Data pendapatan")
+
+	sumIncome := GetSumIncome()
+	fmt.Printf("Data pendapatan saat ini adalah %.f\n", sumIncome)
+	fmt.Println("Klik Enter untuk kembali ...")
+	fmt.Scanln()
 }

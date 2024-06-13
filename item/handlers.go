@@ -6,9 +6,10 @@ import (
 )
 
 type Item struct {
-	Name     string
-	Price    float64
-	Category string
+	Name         string
+	CapitalPrice float64
+	SalePrice    float64
+	Category     string
 }
 
 type TabItem []Item
@@ -34,7 +35,7 @@ func DeleteItemByIndex(index int) {
 func ShowItemList() {
 	for index, item := range ItemList {
 		number := index + 1
-		fmt.Printf("%d. %s seharga %.f dengan kategori %s\n", number, item.Name, item.Price, item.Category)
+		fmt.Printf("%d. %s dengan harga modal %.f, seharga %.f ada di kategori %s\n", number, item.Name, item.CapitalPrice, item.SalePrice, item.Category)
 	}
 	fmt.Println("--------------------------")
 }
@@ -51,9 +52,13 @@ func AddItemMenu() {
 		fmt.Print("> ")
 		fmt.Scan(&newItem.Name)
 
-		fmt.Println("💰 Masukkan harga barang:")
+		fmt.Println("💵 Masukkan harga modal barang:")
 		fmt.Print("> ")
-		fmt.Scan(&newItem.Price)
+		fmt.Scan(&newItem.CapitalPrice)
+
+		fmt.Println("💶 Masukkan harga jual barang:")
+		fmt.Print("> ")
+		fmt.Scan(&newItem.SalePrice)
 
 		fmt.Println("🏷️  Masukkan kategori barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
@@ -61,7 +66,7 @@ func AddItemMenu() {
 
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi penambahan barang:")
-		fmt.Printf("%s seharga %.f dengan kategori %s\n", newItem.Name, newItem.Price, newItem.Category)
+		fmt.Printf("%s dengan harga modal %.f, seharga %.f ada di kategori %s\n", newItem.Name, newItem.CapitalPrice, newItem.SalePrice, newItem.Category)
 		utils.ConfirmInput(&isConfirm, "menambahkan barang")
 
 		if isConfirm {
@@ -79,13 +84,14 @@ func EditItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Edit")
 
 	if IsItemExist() {
+		var newItem Item
 		var selectedNumber int
 		var isConfirm bool
 
 		ShowItemList()
 		fmt.Println("Masukkan nomor barang yang ingin diedit")
 		utils.InputMenu(&selectedNumber, len(ItemList))
-		newItem := ItemList[selectedNumber-1]
+		newItem = ItemList[selectedNumber-1]
 		selectedItem := ItemList[selectedNumber-1]
 
 		utils.ClearScreen()
@@ -97,9 +103,13 @@ func EditItemMenu() {
 		fmt.Print("> ")
 		fmt.Scanln(&newItem.Name)
 
-		fmt.Println("💰 Masukkan harga baru barang:")
+		fmt.Println("💵 Masukkan harga baru modal barang:")
 		fmt.Print("> ")
-		fmt.Scanln(&newItem.Price)
+		fmt.Scanln(&newItem.CapitalPrice)
+
+		fmt.Println("💶 Masukkan harga baru jual barang:")
+		fmt.Print("> ")
+		fmt.Scanln(&newItem.SalePrice)
 
 		fmt.Println("🏷️ Masukkan kategori baru barang (tidak boleh ada spasi):")
 		fmt.Print("> ")
@@ -108,7 +118,8 @@ func EditItemMenu() {
 		utils.ClearScreen()
 		fmt.Println("Konfirmasi perubahan barang:")
 		fmt.Printf("🔠 Nama \"%s\" diubah menjadi \"%s\"\n", selectedItem.Name, newItem.Name)
-		fmt.Printf("💰 Harga %.f diubah menjadi %.f\n", selectedItem.Price, newItem.Price)
+		fmt.Printf("💵 Harga modal %.f diubah menjadi %.f\n", selectedItem.CapitalPrice, newItem.CapitalPrice)
+		fmt.Printf("💶 Harga jual %.f diubah menjadi %.f\n", selectedItem.SalePrice, newItem.SalePrice)
 		fmt.Printf("🏷️ Kategori \"%s\" diubah menjadi \"%s\"\n", selectedItem.Category, newItem.Category)
 		utils.ConfirmInput(&isConfirm, "mengedit barang")
 
@@ -139,7 +150,8 @@ func DeleteItemMenu() {
 		fmt.Println("Konfirmasi penghapusan barang:")
 		fmt.Printf("Nomor: %d\n", selectedNumber)
 		fmt.Printf("Nama: %s\n", selectedItem.Name)
-		fmt.Printf("Harga: %.f\n", selectedItem.Price)
+		fmt.Printf("Harga modal: %.f\n", selectedItem.CapitalPrice)
+		fmt.Printf("Harga jual: %.f\n", selectedItem.SalePrice)
 		fmt.Printf("Kategori: %s\n", selectedItem.Category)
 		utils.ConfirmInput(&isConfirm, "menghapus barang")
 
@@ -185,7 +197,8 @@ func SearchItemMenu() {
 				fmt.Println("Hasil pencarian barang:")
 				fmt.Printf("Nomor: %d\n", index+1)
 				fmt.Printf("Nama: %s\n", item.Name)
-				fmt.Printf("Harga: %.f\n", item.Price)
+				fmt.Printf("Harga modal: %.f\n", item.CapitalPrice)
+				fmt.Printf("Harga jual: %.f\n", item.SalePrice)
 				fmt.Printf("Kategori: %s\n", item.Category)
 				fmt.Println("--------------------------")
 			}
