@@ -138,7 +138,8 @@ func ShowItemMenu() {
 	utils.PrintBreadcrumb("Menu", "Barang", "Lihat")
 
 	if IsItemExist() {
-		ShowItemList()
+		fmt.Println("Daftar barang (diurutkan berdasarkan kategori):")
+		ShowSortedItemListByCategory()
 		fmt.Println("Klik Enter untuk kembali ...")
 		fmt.Scanln()
 	} else {
